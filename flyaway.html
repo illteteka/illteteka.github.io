@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script type='text/javascript'>
+window.onload=function(){
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+		canvas.width  = 1000 ;
+		canvas.height = 1000;
+		
+		
+		var banvas = document.getElementById("banvas");
+		var btx = banvas.getContext("2d");
+		banvas.width  = 1000;
+		banvas.height = 1000;
+		//var height = ctx.canvas.height;
+		//var width = ctx.canvas.width/10;
+        var RAF;
+        var i = 0, j = 0, q = 0, p = 0, r = 0;
+		
+		
+		var counter = 0;
+		var squaresize = 1;
+		//var k = [1000/squaresize][1000/squaresize];
+		
+		//console.log(k[0][0]);
+		
+		function getRandomColor() {
+			var letters = '0123456789ABCDEF';
+			var color = '#';
+			for (var l = 0; l < 6; l++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			console.log(color);
+			return color;
+}
+		
+		
+        function animate() {
+		
+			r = Math.round(Math.random());
+			ctx.fillStyle = getRandomColor()
+            ctx.beginPath();
+            ctx.fillRect(Math.floor(Math.random()* 1000/squaresize) * squaresize, Math.floor(Math.random()* 1000/squaresize) * squaresize, squaresize, squaresize);
+			ctx.translate(500, 500);
+			//var ctx2 = c.getContext("2d");
+			ctx.rotate(20 * Math.PI / 180);
+			//var destCtx = c.getContext('2d');
+			ctx.drawImage(canvas, 0.1, 0.1);
+            ctx.fill();
+            ctx.closePath();
+			
+			
+			btx.fillStyle = getRandomColor()
+            btx.beginPath();
+            btx.fillRect(Math.floor(Math.random()* 1000/squaresize) * squaresize, Math.floor(Math.random()* 1000/squaresize) * squaresize, squaresize, squaresize);
+			btx.translate(500, 500);
+			btx.rotate(-20 * Math.PI / 180);
+			//var destCtx = c.getContext('2d');
+			btx.drawImage(banvas, 0.1, 0.1);
+            btx.fill();
+            btx.closePath();
+			counter+=1;
+			
+			if (counter == 1300)
+			{
+				ctx.beginPath();
+				ctx.drawImage(banvas, 0, 0);
+				ctx.closePath();
+				
+				btx.beginPath();
+				btx.clearRect(0, 0, banvas.width, banvas.height);
+				btx.closePath();
+				
+				counter = 0;
+			}
+			
+            RAF = requestAnimationFrame(function () {
+                animate();
+            });
+        }
+        animate();
+		
+		setInterval(function(){ animate(); }, 1);
+}
+</script>
+</head>
+<body>
+  <canvas id="canvas" width=0 height=0 style="position:absolute;z-index:0;"></canvas>
+  <canvas id="banvas" width=0 height=0 style="position:absolute;z-index:1;"></canvas>
+</body>
+</html>

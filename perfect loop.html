@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type='text/javascript'>
+window.onload=function(){
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+		canvas.width  = 1000;
+		canvas.height = 1000;
+		
+		var banvas = document.getElementById("banvas");
+		var btx = banvas.getContext("2d");
+		banvas.width  = 1000;
+		banvas.height = 1000;
+		
+		var counter = 0;
+		
+		var squaresize = 1;
+		
+		function getRandomColor()
+		{
+			var letters = 'ABCDEF01234';
+			var color = '#';
+			for (var l = 0; l < 6; l++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		}
+		
+        function animate()
+		{	
+			ctx.fillStyle = getRandomColor();
+			
+            ctx.beginPath();
+            ctx.fillRect(Math.floor(Math.random()* 1000/squaresize) * squaresize, Math.floor(Math.random()* 1000/squaresize) * squaresize, squaresize, squaresize);
+			
+			ctx.translate(500, 500);
+			
+			ctx.rotate(20 * Math.PI / 180);
+			
+			ctx.drawImage(canvas, 0.1, 0.1);
+			//btx.globalAlpha = 0.4;
+			//ctx.translate(-100, -100);
+            ctx.fill();
+            ctx.closePath();
+			
+			
+			
+			btx.fillStyle = getRandomColor();
+			
+            btx.beginPath();
+            btx.fillRect(Math.floor(Math.random()* 1000/squaresize) * squaresize, Math.floor(Math.random()* 1000/squaresize) * squaresize, squaresize, squaresize);
+			
+			btx.translate(500, 500);
+			
+			btx.rotate(190 * Math.PI / 180);
+			
+			btx.drawImage(banvas, 0.1, 0.1);
+			//btx.globalAlpha = 0.4;
+			//ctx.translate(-100, -100);
+            btx.fill();
+            btx.closePath();
+			
+			counter+=1;
+			
+			
+			
+			
+			if (counter == 400)
+			{
+				ctx.beginPath();
+				ctx.drawImage(banvas, 0, 0);
+				ctx.closePath();
+				
+				btx.beginPath();
+				btx.clearRect(0, 0, banvas.width, banvas.height);
+				btx.closePath();
+				
+				counter = 0;
+			}
+        }
+		
+        animate();
+		
+		setInterval(function(){ animate(); }, 1);
+}
+</script>
+</head>
+<body>
+  <canvas id="canvas" width=0 height=0 style="position:absolute;z-index:0;"></canvas>
+  <canvas id="banvas" width=0 height=0 style="position:absolute;z-index:1;"></canvas>
+</body>
+</html>

@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script type='text/javascript'>
+window.onload=function(){
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+		canvas.width  = 1000 ;
+		canvas.height = 1000;
+		//var height = ctx.canvas.height;
+		//var width = ctx.canvas.width/10;
+        var RAF;
+        var i = 0, j = 0, q = 0, p = 0, r = 0;
+		
+		var squaresize = 1;
+		var k = [1000/squaresize][1000/squaresize];
+		
+		//console.log(k[0][0]);
+		
+		function getRandomColor() {
+			var letters = '0123456789ABCDEF';
+			var color = '#';
+			for (var l = 0; l < 6; l++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			console.log(color);
+			return color;
+}
+		
+		
+        function animate() {
+		
+			r = Math.round(Math.random());
+			
+			if(r == 0){
+				ctx.fillStyle = getRandomColor();//"red";
+			}
+            else {
+				ctx.fillStyle = getRandomColor();//"blue";
+			}
+			
+            ctx.beginPath();
+            ctx.fillRect(j * squaresize, q * squaresize, squaresize, squaresize);
+			
+			ctx.translate(500, 500);
+			
+			var c = document.getElementById("canvas");
+			var ctx2 = c.getContext("2d");
+			ctx2.rotate(90 * Math.PI / 180);
+			
+			var destCtx = c.getContext('2d');
+
+//call its drawImage() function passing it the source canvas directly
+			destCtx.drawImage(c, 10, 0.1);
+			
+			console.log("r", r);
+			
+			//ctx.translate(-100, -100);
+            ctx.fill();
+            ctx.closePath();
+            // update
+			i++;
+            j = Math.floor(Math.random()* 1000/squaresize);
+			q = Math.floor(Math.random()* 1000/squaresize);
+			
+			//console.log(j, "---", q);
+
+			//k[i] = j;
+			//l[i] = q;
+            //console.log(k[i] + "---" + l[i]);
+			
+			//console.log(i);
+           // if (i == 1) {
+			
+				<!-- cancelAnimationFrame(RAF); -->
+            <!-- } -->
+			
+			
+			
+            <!-- RAF = requestAnimationFrame(function () { -->
+                <!-- animate(); -->
+            <!-- }); -->
+        }
+        animate();
+		
+		setInterval(function(){ animate(); }, 1);
+}
+</script>
+</head>
+<body>
+  <canvas id="canvas" width=0 height=0></canvas>
+</body>
+</html>

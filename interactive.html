@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	*{margin:0;padding:0;}
+</style>
+<script type='text/javascript'>
+window.onload=function(){
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+		canvas.width  = 600 ;
+		canvas.height = 600;
+		
+		
+		
+		
+		var banvas = document.getElementById("banvas");
+		var btx = banvas.getContext("2d");
+		banvas.width  = 600;
+		banvas.height = 600;
+		
+		
+		banvas.addEventListener("mousedown", getPosition, false);
+		//var height = ctx.canvas.height;
+		//var width = ctx.canvas.width/10;
+        var RAF;
+        var i = 0, j = 0, q = 0, p = 0, r = 0 ;
+		
+		var h = Math.floor(Math.random()*1);
+		
+		
+		var counter = 0;
+		var squaresize = .5;
+		
+		var mousex = 0;
+		var mousey = 0;
+		var mousexprev = 0;
+		var mouseyprev = 0;
+		//var k = [1000/squaresize][1000/squaresize];
+		
+		//console.log(k[0][0]);
+		
+		<!-- function getRandomColor() { -->
+			<!-- var letters = '01234ABCDEF'; -->
+			<!-- var color = '#'; -->
+			<!-- for (var l = 0; l < 6; l++) { -->
+				<!-- color += letters[Math.floor(Math.random() * 16)]; -->
+			<!-- } -->
+			<!-- console.log(color); -->
+			<!-- return color; -->
+
+		<!-- } -->
+		
+		function getPosition(event){	
+			var x = event.x;
+			var y = event.y;
+
+			var canvas = document.getElementById("banvas");
+
+			x -= canvas.offsetLeft;
+			y -= canvas.offsetTop;
+			
+			
+			<!-- btx.fillStyle = getRandomColor() -->
+            <!-- btx.beginPath(); -->
+			<!-- btx.fillRect(x, y, squaresize, squaresize); -->
+			<!-- btx.fill(); -->
+            <!-- btx.closePath(); -->
+			
+			//alert("x:" + x + " y:" + y);
+			mousex = x;
+			mousey = y;
+		}
+		
+		function hsvToRgb(h, s, v) {
+			var r, g, b;
+			var i = Math.floor(h * 6);
+			var f = h * 6 - i;
+			var p = v * (1 - s);
+			var q = v * (1 - f * s);
+			var t = v * (1 - (1 - f) * s);
+
+			  switch (i % 6) {
+				case 0: r = v, g = t, b = p; break;
+				case 1: r = q, g = v, b = p; break;
+				case 2: r = p, g = v, b = t; break;
+				case 3: r = p, g = q, b = v; break;
+				case 4: r = t, g = p, b = v; break;
+				case 5: r = v, g = p, b = q; break;
+				
+				}
+ 
+			return [ r * 255, g * 255, b * 255 ];
+			
+		}
+		
+
+
+		
+		
+		<!-- golden_ratio_conjugate = 0.618033988749895 -->
+		<!-- h = rand # use random start value -->
+		<!-- gen_html { -->
+		<!-- h += golden_ratio_conjugate -->
+		<!-- h %= 1 -->
+		<!-- hsv_to_rgb(h, 0.5, 0.95) -->
+			<!-- }	 -->
+			
+		
+		
+		function getRandomColor() {
+		
+		var golden_ratio_conjugate = 0.618033988749895;
+		h += golden_ratio_conjugate;
+		var g = h%1;
+		
+		console.log(g);
+		
+		var color = hsvToRgb(g, 0.5, 0.95);
+		var cc = "rgba(";
+        cc += color[0] + ",";
+        cc += color[1] + ",";
+        cc += color[2] + ",";
+        cc += "255)"
+		//console.log(cc);
+		return cc;
+		
+		}
+		
+		
+        function animate() {
+		
+			r = Math.round(Math.random());
+			ctx.fillStyle = getRandomColor()
+            ctx.beginPath();
+            ctx.fillRect(Math.floor(Math.random()* 1000/squaresize) * squaresize, Math.floor(Math.random()* 1000/squaresize) * squaresize, squaresize, squaresize);
+			ctx.translate(canvas.width/2, canvas.height/2);
+			//var ctx2 = c.getContext("2d");
+			ctx.rotate(60 * Math.PI / 180);
+			//var destCtx = c.getContext('2d');
+			ctx.drawImage(canvas, 0.1, 0.1);
+			
+			ctx.translate(-canvas.width/2, -canvas.height/2);
+            ctx.fill();
+            ctx.closePath();
+			
+			
+			btx.fillStyle = getRandomColor()
+            btx.beginPath();
+            btx.fillRect(Math.floor(Math.random()* 1000/squaresize) * squaresize, Math.floor(Math.random()* 1000/squaresize) * squaresize, squaresize, squaresize);
+			btx.translate(canvas.width/2, canvas.height/2);
+			btx.rotate(60 * Math.PI / 180);
+			//var destCtx = c.getContext('2d');
+			btx.drawImage(banvas, 0.1, 0.1);
+			
+			//if((mousex !== mousexprev) && (mousey !== mouseyprev)){
+				btx.fillRect(mousex, mousey, 25, 25);
+				mousexprev = mousex;
+				mouseyprev = mousey;
+				//alert();
+			//}
+			
+			btx.translate(-canvas.width/2, -canvas.height/2);
+            btx.fill();
+            btx.closePath();
+			counter+=1;
+			
+			<!-- if (counter == 1000) -->
+			<!-- { -->
+				<!-- ctx.beginPath(); -->
+				<!-- ctx.resetTransform(); -->
+				<!-- //ctx.clearRect(0, 0, canvas.width, canvas.height); -->
+				<!-- ctx.drawImage(banvas, 0.1, 0.1); -->
+				<!-- ctx.closePath(); -->
+				
+				<!-- btx.beginPath(); -->
+				<!-- btx.resetTransform(); -->
+				<!-- btx.clearRect(0, 0, banvas.width, banvas.height); -->
+				<!-- //btx.drawImage(canvas,0.1,0.1); -->
+				<!-- btx.closePath(); -->
+				
+				<!-- counter = 0; -->
+			<!-- } -->
+			
+            <!-- RAF = requestAnimationFrame(function () { -->
+                <!-- animate(); -->
+            <!-- }); -->
+        }
+        //animate();
+		
+		setInterval(function(){ animate(); }, 1);
+}
+</script>
+</head>
+<body>
+  <canvas id="canvas" width=0 height=0 style="position:absolute;z-index:0;"></canvas>
+  <canvas id="banvas" width=0 height=0 style="position:absolute;z-index:1;"></canvas>
+</body>
+</html>
